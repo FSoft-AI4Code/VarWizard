@@ -1,4 +1,4 @@
-def generate(input_ids, tokenizer, model, max_length: int = 505, penalty_alpha: float = 0.7, top_k: int = 40):
+def generate(input_ids, tokenizer, model, max_length: int = 505, penalty_alpha: float = 0.6, top_k: int = 4):
     attention_mask = input_ids.ne(tokenizer.pad_token_id)
     predictions = model.generate(input_ids = input_ids,
                                   attention_mask =  attention_mask,

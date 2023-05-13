@@ -10,7 +10,7 @@ python_requires=">=3.7",
 include_package_data=True,
 install_requires=[
           'torch>=1.12.1',
-          'peft',
+          'peft==0.1.0',
           'transformers>=4.28.0',
           'tree-sitter'
       ],

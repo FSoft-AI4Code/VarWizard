@@ -17,6 +17,6 @@ authors = ["FSoft-AI4Code <support.aic@fpt.com>"]
 [tool.poetry.dependencies]
 python = ">=3.7"
 torch = ">=1.12.1"
-peft = "*"
+peft = "0.1.0"
 transformers = ">=4.28.0"
 tree-sitter = "*"
