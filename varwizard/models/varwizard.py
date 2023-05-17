@@ -1,6 +1,8 @@
 import torch
 from peft import get_peft_model
 import functools
+import os
+import json
 from huggingface_hub import hf_hub_download
 
 from varwizard.config import get_prefix_tuning_config
@@ -19,16 +21,33 @@ def get_varwizard_model(varwizard_path = 'Fsoft-AIC/VarWizard', model_name = 'bi
 	return tokenizer, model
 
 class VarWizard:
-	def __init__(self):
+	def __init__(self, model_name = 'bloom-560m'):
+		assert model_name in ['bloom-560m'], "this model isn't supported"
+		if model_name == 'bloom-560m':
+			model_name = f'bigscience/{model_name}'
 		tokenizer, model = get_varwizard_model()
 		self.tokenizer = tokenizer
 		self.model = model.eval()
 		self.prepare_input = functools.partial(prepare_input, tokenizer = tokenizer)
 		self.generate = functools.partial(generate, tokenizer = self.tokenizer, model = self.model)
-	def make_new_code(self, input, lang, max_input_len: int = 400, device = 'cpu'):
-		input_ids = torch.tensor(self.prepare_input(input, lang, max_input_len = max_input_len))
-		input_ids = input_ids.to(device)
-		self.model.to(device)
-		input_ids = input_ids.unsqueeze(0)
-		predictions = self.generate(input_ids)
-		return predictions
+	@torch.inference_mode()
+	def make_new_code(self, input, lang, output_path = None, max_input_len: int = 400, max_new_tokens: int = 100, penalty_alpha: float = 0.6, top_k: int = 4, device = 'cpu'):
+		if os.path.exists(input):
+			with open(input) as f:
+				input = f.read()
+		input = input.strip()
+		all_predictions = []
+		for input_ids, vmap in self.prepare_input(input, lang, max_input_len = max_input_len):
+			input_ids = torch.tensor(input_ids)
+			input_ids = input_ids.to(device)
+			self.model.device = device
+			self.model.to(device)
+			input_ids = input_ids.unsqueeze(0)
+			prediction = self.generate(input_ids, vmap, max_new_tokens = max_new_tokens, penalty_alpha = penalty_alpha, top_k = top_k)
+			all_predictions.append(prediction)
+		prediction = '\n'.join(all_predictions)
+		if output_path is not None:
+			with open(output_path, 'w') as f:
+				f.write(prediction)
+		return prediction
+
