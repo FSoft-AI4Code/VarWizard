@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 [tool.poetry]
 name="varwizard"
-version="0.2"
+version="0.2.1"
 license = "Apache-2.0"
 description = "An Automated Tool for Improving Code Quality Through Variable Name Refinement with Language Models"
 readme = "readme.md"

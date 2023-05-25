@@ -3,7 +3,7 @@ import argparse
 import warnings
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model-name', help = 'base pretrained model', type = str, default = 'bloom-560m', choices = ['bloom-560m'])
+    parser.add_argument('--model-name', help = 'base pretrained model', type = str, default = 'bloom-560m', choices = VarWizard.__supported_models__)
     parser.add_argument('--input', type = str, required = True, help = 'input for VarWizard (a string of code or a file path)')
     parser.add_argument('--lang', type = str, required = True, help = 'the programming language of the input', choices = ['c', 'cpp', 'java', 'php', 'go', 'javascript', 'ruby', 'rust', 'python', 'c_sharp'])
     parser.add_argument('--output-path', type = str, help = 'the path of the output file if you want to save the output')

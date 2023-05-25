@@ -12,24 +12,34 @@ from varwizard.generation.gen import generate
 
 
 def get_varwizard_model(varwizard_path = 'Fsoft-AIC/VarWizard', model_name = 'bigscience/bloom-560m'):
+	if 'bloom' in model_name:
+		from varwizard.models.bloom import get_tokenizer_and_model
+	else:
+		from varwizard.models.codet5 import get_tokenizer_and_model
+	base_model_name = model_name.split('/')[1].replace('-', '_')
 	tokenizer, model = get_tokenizer_and_model(model_name)
-	peft_config = get_prefix_tuning_config()
+	peft_config = get_prefix_tuning_config(base_model_name)
 	model = get_peft_model(model, peft_config)
-	cp_path = hf_hub_download(repo_id = varwizard_path, filename = "varwizard.tar")
+	base_model_name = model_name.split('/')[1].replace('-', '_')
+	cp_path = hf_hub_download(repo_id = varwizard_path, filename = f"varwizard_{base_model_name}.tar")
 	cp_data = torch.load(cp_path, map_location = 'cpu')
 	model.load_state_dict(cp_data, strict = False)
 	return tokenizer, model
 
 class VarWizard:
+	__supported_models__ = ['bloom-560m', 'codet5-base']
 	def __init__(self, model_name = 'bloom-560m'):
-		assert model_name in ['bloom-560m'], "this model isn't supported"
+		assert model_name in VarWizard.__supported_models__, f"this model: {model_name} isn't supported"
 		if model_name == 'bloom-560m':
 			model_name = f'bigscience/{model_name}'
-		tokenizer, model = get_varwizard_model()
+		elif model_name == 'codet5-base':
+			model_name = 'Salesforce/codet5-base'
+		tokenizer, model = get_varwizard_model(model_name = model_name)
 		self.tokenizer = tokenizer
 		self.model = model.eval()
+		self.base_model_name = model_name
 		self.prepare_input = functools.partial(prepare_input, tokenizer = tokenizer)
-		self.generate = functools.partial(generate, tokenizer = self.tokenizer, model = self.model)
+		self.generate = functools.partial(generate, base_model_name = self.base_model_name, tokenizer = self.tokenizer, model = self.model)
 	@torch.inference_mode()
 	def make_new_code(self, input, lang, output_path = None, max_input_len: int = 400, max_new_tokens: int = 100, penalty_alpha: float = 0.6, top_k: int = 4, device = 'cpu'):
 		if os.path.exists(input):
@@ -37,7 +47,7 @@ class VarWizard:
 				input = f.read()
 		input = input.strip()
 		all_predictions = []
-		for input_ids, vmap in self.prepare_input(input, lang, max_input_len = max_input_len):
+		for input_ids, vmap in self.prepare_input(input, lang, base_model_name = self.base_model_name, max_input_len = max_input_len):
 			input_ids = torch.tensor(input_ids)
 			input_ids = input_ids.to(device)
 			self.model.device = device
@@ -50,4 +60,4 @@ class VarWizard:
 			with open(output_path, 'w') as f:
 				f.write(prediction)
 		return prediction
-
+	

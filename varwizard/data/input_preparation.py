@@ -19,7 +19,7 @@ def beautify(function_root, function_bytes, vmap, new_function_bytes = None, off
     for child in function_root.children:
         new_function_bytes, offset = beautify(child, function_bytes, vmap, new_function_bytes, offset)
     return new_function_bytes, offset
-def prepare_input(input, lang, tokenizer, max_input_len: int = 400, prompt = ' Output var0 ='):
+def prepare_input(input, lang, tokenizer, base_model_name, max_input_len: int = 400, prompt = ' Output var0 ='):
     parser = Parser()
     so_path = resource_filename('varwizard', f'libs/tree-sitter/{lang}.so')
     parser.set_language(Language(so_path, lang))
@@ -44,8 +44,12 @@ def prepare_input(input, lang, tokenizer, max_input_len: int = 400, prompt = ' O
             vmap[var_name[0]] = f'var{i}'
         new_function_bytes, _ = beautify(function_root, function_bytes, vmap)
         function_code = new_function_bytes.decode()
-        source_tokens = tokenizer.tokenize(function_code, truncation = True, max_length = max_input_len)
-        prompt_tokens = tokenizer.tokenize(prompt)
-        input_tokens = source_tokens + prompt_tokens
-        input_ids = [tokenizer.bos_token_id] + tokenizer.convert_tokens_to_ids(input_tokens)
+        if 'bloom' in base_model_name:
+            source_tokens = tokenizer.tokenize(function_code, truncation = True, max_length = max_input_len)
+            prompt_tokens = tokenizer.tokenize(prompt)
+            input_tokens = source_tokens + prompt_tokens
+            input_ids = [tokenizer.bos_token_id] + tokenizer.convert_tokens_to_ids(input_tokens)
+        elif 'codet5' in base_model_name:
+            input_tokens = tokenizer.tokenize(function_code, truncation = True, max_length = max_input_len)
+            input_ids = [tokenizer.bos_token_id] + tokenizer.convert_tokens_to_ids(input_tokens) + [tokenizer.eos_token_id]
         yield input_ids, {v: k for k, v in vmap.items()}
