@@ -69,4 +69,4 @@ function chunkData(str, chunk) {
 4. Playground: You can play at the link: https://varwizard.loca.lt. At the first time to access, you may need to enter: 4.193.50.237
 5. Examples
 
-There are some examples for varWizard's usage. We can navigate to the folder $examples$ and then go to any subfolder to run the script.
+There are some examples for VarWizard's usage. We can navigate to the folder `examples` and then go to any subfolder to run the script.
