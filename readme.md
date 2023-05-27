@@ -26,7 +26,7 @@ Details for each argument can be found by
 
  * Python API
 
-Another way is to Python methods.
+    Another way is to Python methods.
 Here is a simple example of VarWizard.
 ```
 from varwizard import VarWizard
@@ -40,3 +40,5 @@ VarWizard produces the output
 ```
 static void lsp2poly ( int * m_poly, const int16_t * m_h, int m_n ) { int m_i, m_j ; m_poly [ 0 ] = 0x400000 ; // 1.0 in (3.22) m_poly [ 1 ] = - m_h [ 0 ] << 8 ; // *2 and (0.15) -> (3.22) for ( m_i = 2 ; m_i <= m_n ; m_i ++ ) { m_poly [ m_i ] = m_poly [ m_i - 2 ] ; for ( m_j = m_i ; m_j > 1 ; m_j -- ) m_poly [ m_j ] -= MULL ( m_poly [ m_j - 1 ], m_h [ 2 * m_i - 2 ], FRAC_BITS ) - m_poly [ m_j - 2 ] ; m_poly [ 1 ] -= m_h [ 2 * m_i - 2 ] << 8 ; } }
 ```
+
+4. Playground: You can play at the link: https://varwizard.loca.lt. At the first time to access, you may need to enter: 4.193.50.237
