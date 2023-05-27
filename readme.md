@@ -3,15 +3,13 @@
 
 ## Table of Contents
 
-- [VarWizard: Better Code Quality Through Variable Name Refinement]
+- [VarWizard: Better Code Quality Through Variable Name Refinement](#varwizard-better-code-quality-through-variable-name-refinement)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Installation](#installation)
-   - [Usage](#usage)
-  - [Data Release](#data-release)
-  - [Checkpoint Release](#checkpoint-release)
-  - [Installation](#installation)
   - [Usage](#usage)
+	  - [Command Line](#command-line)
+	  - [Python API](#python-api)
   - [Playground](#playground)
   - [Examples](#examples)
 ## Introduction
@@ -25,9 +23,8 @@ You can easily install this package by the command
     pip install varwizard
 ```
 ## Usage
-    * Command-line
-    
-    You can use VarWizard by running the command
+### Command-line
+You can use VarWizard by running the command
 ```bash
 varwizard [--model-name {bloom-560m, codet5-base} (default: bloom-560m)]
             --input INPUT --lang {c,cpp,java,php,go,javascript,ruby,rust,python,c_sharp} 
@@ -38,10 +35,8 @@ Details for each argument can be found by
 ```varwizard --help```
 
 
- * Python API
-
-    Another way is to Python methods.
-Here is a simple example of VarWizard.
+### Python API
+Another way is to use Python Apis. Here is a simple example in this way.
 ```python
 from varwizard import VarWizard
 
