@@ -47,15 +47,17 @@ class VarWizard:
 				input = f.read()
 		input = input.strip()
 		all_predictions = []
-		for input_ids, vmap in self.prepare_input(input, lang, base_model_name = self.base_model_name, max_input_len = max_input_len):
+		for input_ids, vmap, before_context, after_context in self.prepare_input(input, lang, base_model_name = self.base_model_name, max_input_len = max_input_len):
 			input_ids = torch.tensor(input_ids)
 			input_ids = input_ids.to(device)
 			self.model.device = device
 			self.model.to(device)
 			input_ids = input_ids.unsqueeze(0)
 			prediction = self.generate(input_ids, vmap, max_new_tokens = max_new_tokens, penalty_alpha = penalty_alpha, top_k = top_k)
-			all_predictions.append(prediction)
-		prediction = '\n'.join(all_predictions)
+			all_predictions.extend([before_context, prediction])
+			if after_context is not None:
+				all_predictions.append(after_context)
+		prediction = ''.join(all_predictions)
 		if output_path is not None:
 			with open(output_path, 'w') as f:
 				f.write(prediction)

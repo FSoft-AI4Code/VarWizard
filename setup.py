@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 setup(name='varwizard',
-version='0.2.1',
+version='0.2.2',
 description='An Automated Tool for Improving Code Quality Through Variable Name Refinement with Language Models',
 url='https://github.com/FSoft-AI4Code/VarWizard',
 author='FSoft-AI4Code',

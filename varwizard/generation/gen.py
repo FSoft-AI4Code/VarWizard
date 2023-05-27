@@ -19,6 +19,7 @@ def generate(input_ids, vmap, tokenizer, model, base_model_name, max_new_tokens:
     new_vmap = {}
     for i in range(len(pred_coms) // 3):
         key, _, value = pred_coms[3 * i: 3 * i + 3]
+        if value.startswith('var') or value.startswith('$var'): continue
         new_vmap[key] = value
     vmap.update(new_vmap)
     for key, value in vmap.items():

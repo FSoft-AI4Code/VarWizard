@@ -1,0 +1,1 @@
+varwizard --input in1.js --lang javascript --output-path out1.js

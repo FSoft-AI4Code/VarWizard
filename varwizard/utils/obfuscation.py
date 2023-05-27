@@ -170,7 +170,7 @@ def get_c_var_names(root, bytes, idens = {'var_num': 0, 'vars': {}}):
     return idens
 def get_php_var_names(root, bytes, idens = {'var_num': 0, 'vars': {}}, KEYWORDS = ['A', '__CLASS__', '__METHOD__', '__FUNCTION__', 'GLOBAL']):
     children = root.children
-    if root.type == 'method_declaration':
+    if root.type == 'function_definition':
         _children = []
         for child in children:
             if child.type == 'name':
