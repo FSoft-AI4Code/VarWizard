@@ -1,16 +1,30 @@
-### VarWizard
-***
-1. Introduction
+# VarWizard: Better Code Quality Through Variable Name Refinement 
+[![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/FSoft-AI4Code/VarWizard/blob/master/LICENSE) [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
+
+## Table of Contents
+
+- [VarWizard: Better Code Quality Through Variable Name Refinement]
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Installation](#installation)
+   - [Usage](#usage)
+  - [Data Release](#data-release)
+  - [Checkpoint Release](#checkpoint-release)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Playground](#playground)
+  - [Examples](#examples)
+## Introduction
 
 VarWizard is a language model-based tool to help generate more meaningful variable names in source code than the original version. It supports 10 programming languages: c, cpp, java, javascript, go, python, php, c\_sharp, ruby, rust.
 
-2. Installation
+## Installation
 
 You can easily install this package by the command
 ```bash
     pip install varwizard
 ```
-3. Usage
+## Usage
     * Command-line
     
     You can use VarWizard by running the command
@@ -65,8 +79,8 @@ function chunkData(str, chunk) {
   return chunk;
 }
 ```
-
-4. Playground: You can play at the link: https://varwizard.loca.lt. At the first time to access, you may need to enter: 4.193.50.237
-5. Examples
+## Playground
+You can play at the link: https://varwizard.loca.lt. At the first time to access, you may need to enter: 4.193.50.237
+## Examples
 
 There are some examples for VarWizard's usage. We can navigate to the folder `examples` and then go to any subfolder to run the script.
