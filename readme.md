@@ -16,6 +16,13 @@
 
 VarWizard is a language model-based tool to help generate more meaningful variable names in source code than the original version. It supports 10 programming languages: c, cpp, java, javascript, go, python, php, c\_sharp, ruby, rust.
 
+An overview of VarWizard is in the following figure. VarWizard automatically extracts all variable names in a code snippet, and then
+it generates candidates for them.
+<p align="center">
+  <img src="./assets/overview-pipeline.png" width="800px" alt="overview">
+</p>
+
+
 ## Installation
 
 You can easily install this package by the command
