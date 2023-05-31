@@ -47,7 +47,7 @@ Another way is to use Python Apis. Here is a simple example in this way.
 ```python
 from varwizard import VarWizard
 
-model = VarWizard(model_name = "codet5-base")
+model = VarWizard(model_name = "bloom-560m")
 code = """
 function chunkData(str, chunk) {
   var chunk = [];
@@ -67,22 +67,22 @@ print(model.make_new_code(code, 'javascript', device = 'cuda:0'))
 ```
 VarWizard produces the output
 ```javascript
-function chunkData(str, chunk) {
-  var chunk = [];
-  var length = str.length;
-  var i = 0;
-  for (; i < length; i += chunk) {
-    if (i + chunk < length) {
-      chunk.push(str.substring(i, i + chunk));
+function chunkData(data, length) {
+  var result = [];
+  var lengthOf = data.length;
+  var pos = 0;
+  for (; pos < lengthOf; pos += length) {
+    if (pos + length < lengthOf) {
+      result.push(data.substring(pos, pos + length));
     } else {
-      chunk.push(str.substring(i, length));
+      result.push(data.substring(pos, lengthOf));
     }
   }
-  return chunk;
-}
+  return result;
+} 
 ```
 ## Playground
 You can play at the link: https://varwizard.loca.lt. At the first time to access, you may need to enter: 4.193.50.237
 ## Examples
 
-There are some examples for VarWizard's usage. We can navigate to the folder `examples` and then go to any subfolder to run the script.
+There are some examples for VarWizard's usage. You can navigate to the folder `examples` and then go to any subfolder to run the script.
