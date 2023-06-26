@@ -1,6 +1,6 @@
 # VarWizard: Better Code Quality Through Variable Name Refinement 
 [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/FSoft-AI4Code/VarWizard/blob/master/LICENSE) [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/)
-
+[![Downloads](https://static.pepy.tech/badge/varwizard)](https://pepy.tech/project/varwizard)
 ## Table of Contents
 
 - [VarWizard: Better Code Quality Through Variable Name Refinement](#varwizard-better-code-quality-through-variable-name-refinement)
